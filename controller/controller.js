@@ -13,18 +13,55 @@ const create_task = async(req, res)=>{
 
 
 const get_tasks = async(req, res) =>{
+
     const email = req.params.email;
-    let data = await model.Tasks.find({ userEmail:'' });
+    // console.log({email});
+    let data = await model.Tasks.find({
+        userEmail: email,
+        isComplete:false
+    });
     res.json(data)
 
 }
 
+const get_complete_tasks = async(req, res) =>{
+    const email = req.params.email;
+    let data = await model.Tasks.find({
+        userEmail:email,
+        isComplete:true
+    });
+    res.json(data)
+}
+
+const update_task_complete = async(req, res) =>{
+    const id = req.body;
+    // console.log(id);
+    let data = await model.Tasks.findOneAndUpdate(id, {isComplete:true}, {new:true})
+    // console.log(data);
+    res.json(data)
+}
+
+const update_task_not_completed = async(req, res)=>{
+    const id = req.body;
+    let data = await model.Tasks.findOneAndUpdate(id, {isComplete:false}, {new:true})
+    res.json(data)
+}
+
 const delete_tasks = async(req, res) =>{
-    
+    if(!req.body) res.status(400).json({message:"Request body not found"})
+    await model.Tasks.deleteOne(req.body, (err)=>{
+        if(!err) res.json("Record Deleted...")
+    }).clone().catch(function(err){
+        res.json("Error while deleting transaction record..")
+    });
 }
 
 
 module.exports = {
     create_task,
-    get_tasks
+    get_tasks,
+    delete_tasks,
+    update_task_complete,
+    update_task_not_completed,
+    get_complete_tasks
 }

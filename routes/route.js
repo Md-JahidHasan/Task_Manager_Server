@@ -20,6 +20,8 @@ routes.route(`/api/completedTasks/:email`)
 routes.route(`/api/tasks`).patch(controller.update_task_complete)
 
 routes.route(`/api/completedTasks`).patch(controller.update_task_not_completed)
+    
 
+routes.route(`/api/postComment`).patch(controller.post_comment)
 
 module.exports = routes;

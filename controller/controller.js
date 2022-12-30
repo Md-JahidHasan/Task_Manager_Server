@@ -41,6 +41,15 @@ const update_task_complete = async(req, res) =>{
     res.json(data)
 }
 
+const post_comment= async(req, res) =>{
+    const arrayOfData = req.body;
+    let data = await model.Tasks.updateOne(
+        arrayOfData[1], { $push:{ comments: arrayOfData[0] } }, {new:true}
+    )
+    res.json(data)
+    
+}
+
 const update_task_not_completed = async(req, res)=>{
     const id = req.body;
     let data = await model.Tasks.findOneAndUpdate(id, {isComplete:false}, {new:true})
@@ -62,6 +71,7 @@ module.exports = {
     get_tasks,
     delete_tasks,
     update_task_complete,
+    post_comment,
     update_task_not_completed,
     get_complete_tasks
 }

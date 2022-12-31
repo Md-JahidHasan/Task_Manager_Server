@@ -16,9 +16,9 @@ app.use(express.json());
 const conn = require('./db/connection')
 
 // Using routes
-app.use('/',(req, res)=>{
-    res.json('Server is running')
-});
+// app.use('/',(req, res)=>{
+//     res.json('Server is running')
+// });
 app.use(require('./routes/route'));
 
 conn.then(db=>{

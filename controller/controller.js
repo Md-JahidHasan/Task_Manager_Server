@@ -56,6 +56,13 @@ const update_task_not_completed = async(req, res)=>{
     res.json(data)
 }
 
+const edit_and_update_task = async(req, res)=>{
+    const newData = req.body;
+    console.log('jh',newData);
+    let data = await model.Tasks.findOneAndUpdate(newData[0], newData[1], {new:true});
+    res.json(data)
+}
+
 const delete_tasks = async(req, res) =>{
     if(!req.body) res.status(400).json({message:"Request body not found"})
     await model.Tasks.deleteOne(req.body, (err)=>{
@@ -73,5 +80,6 @@ module.exports = {
     update_task_complete,
     post_comment,
     update_task_not_completed,
-    get_complete_tasks
+    get_complete_tasks,
+    edit_and_update_task
 }

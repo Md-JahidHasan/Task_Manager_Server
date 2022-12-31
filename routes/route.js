@@ -24,4 +24,6 @@ routes.route(`/api/completedTasks`).patch(controller.update_task_not_completed)
 
 routes.route(`/api/postComment`).patch(controller.post_comment)
 
+routes.route(`/api/editTask`).patch(controller.edit_and_update_task)
+
 module.exports = routes;
